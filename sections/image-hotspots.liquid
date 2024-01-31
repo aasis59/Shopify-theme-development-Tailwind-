@@ -25,22 +25,22 @@
           }}
 
         {% else %}
-          {{ 'hero-apparel-1' | placeholder_svg_tag: 'block h-full w-full object-scale-down' }}
+          {{ 'collection-apparel-4' | placeholder_svg_tag: 'block h-full w-full object-scale-down' }}
         {% endif %}
 
         {% if section.settings.image == blank %}
           {% for i in (1..3) %}
             {% liquid
-              assign x = 10
-              assign y = 20
+              assign x = 20
+              assign y = 50
               assign hotspot_class = 'top-left'
               if forloop.index == 3
-                assign x = 40
-                assign y = 65
+                assign x = 70
+                assign y = 25
                 assign hotspot_class = 'top-right'
               elsif forloop.index == 2
-                assign x = 80
-                assign y = 75
+                assign x = 60
+                assign y = 80
                 assign hotspot_class = 'top-right'
               endif
             %}
