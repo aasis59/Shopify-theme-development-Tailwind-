@@ -1657,6 +1657,10 @@ p,
   grid-template-rows: repeat(5, minmax(0, 1fr));
 }
 
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -1677,6 +1681,10 @@ p,
   align-items: center;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-end {
   justify-content: flex-end;
 }
@@ -1691,6 +1699,18 @@ p,
 
 .justify-around {
   justify-content: space-around;
+}
+
+.justify-items-start {
+  justify-items: start;
+}
+
+.justify-items-end {
+  justify-items: end;
+}
+
+.justify-items-center {
+  justify-items: center;
 }
 
 .gap-1 {
