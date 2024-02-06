@@ -10,15 +10,22 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
-  .custom_image_width {
+  .image-with-text .image {
     width: {{ section.settings.image_width }}%;
+  }
+
+  @media screen and (max-width: 768px) {
+    .image-with-text .image {
+      width: 100%;
+    }
+
   }
 {%- endstyle -%}
 
 <div>
-  <div class=" {% if section.settings.page_width %}page-width{% endif %} section-{{ section.id }}-padding text-{{ section.settings.vertical_alignment }}   ">
+  <div class="image-with-text {% if section.settings.page_width %}page-width{% endif %} section-{{ section.id }}-padding text-{{ section.settings.vertical_alignment }}   ">
     <div class="grid-gap flex flex-col md:flex-row {{ section.settings.image_placement}} ">
-      <div style="width: {{ section.settings.image_width }}%;">
+      <div class="image shrink-0">
         {% assign image = section.settings.image %}
         {% if image %}
           {% assign image_class = ' w-full h-full object-cover ' %}
@@ -31,13 +38,12 @@
         {% endif %}
       </div>
       <div class="
-        flex
-        flex-col
-        {{ section.settings.content_position }}
-        color-{{ section.settings.color_scheme }}
-        w-full
-        grid-gap
-        p-4">
+          flex
+          flex-col
+          {{ section.settings.content_position }}
+          color-{{ section.settings.color_scheme }}
+          p-4
+        ">
         {% for block in section.blocks %}
           {% case block.type %}
             {% when 'heading' %}
@@ -92,12 +98,11 @@
         "type": "range",
         "id": "image_width",
         "label": "Image Width",
-        "min": 50,
-        "max": 120,
-        "default": 80,
+        "min": 20,
+        "max": 80,
+        "default": 50,
         "step": 5,
-        "unit": "px"
-
+        "unit": "%"
       }, {
         "type": "select",
         "id": "content_position",
@@ -236,7 +241,7 @@
     ],
     "presets": [
       {
-        "name": "Image and Image",
+        "name": "Image with text",
         "blocks": [
           {
             "type": "heading"
@@ -249,4 +254,4 @@
       }
     ]
   }
-{%- endschema -%}
+{% endschema %}
