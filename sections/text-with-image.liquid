@@ -11,51 +11,48 @@
     }
   }
 {%- endstyle -%}
+<div class=" {% if section.settings.page_width %}page-width{% endif %} section-{{ section.id }}-padding text-{{ section.settings.vertical_alignment }}   ">
+  <div class=" {{section.settings.image_placement}} gap-4  ">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'image' %}
 
-<div class="color-{{ section.settings.color_scheme }}">
-  <div class=" {% if section.settings.page_width %}page-width{% endif %} section-{{ section.id }}-padding text-{{ section.settings.vertical_alignment }}   ">
-    <div class="{{section.settings.image_placement}} gap-4">
-      <div style="width:{{ section.settings.image_width }}%;">
-        {% assign image = section.settings.image %}
-        {% if image %}
-          {% assign image_class = ' w-full h-full object-cover ' %}
-          {% if settings.corners == 'rounded' %}
-            {% assign image_class = image_class | append: ' rounded-md' %}
-          {% endif %}
-          {{ image | image_url: width: image.width | image_tag: class: image_class }}
-        {% else %}
-          {{ 'detailed-apparel-1' | placeholder_svg_tag: ' w-full h-full object-cover ' }}
-        {% endif %}
-      </div>
-      <div class="flex flex-col {{ section.settings.content_position }}">
-        {% for block in section.blocks %}
-          {% case block.type %}
-            {% when 'heading' %}
-              <h2 class="{{ block.settings.heading_size }}">{{ block.settings.heading }}</h2>
-            {% when 'sub_heading' %}
-              <div class=" rte {{ block.settings.sub_heading_size }}">{{ block.settings.sub_heading }}</div>
-            {% when 'button' %}
-              <div class="">
-                <a href="{{ block.settings.button_url }}" class="button button-primary">
-                  {{ block.settings.button }}
-                </a>
-              </div>
-          {% endcase %}
-        {% endfor %}
-      </div>
-    </div>
+          <div style="width:{{ block.settings.image_width }}%;">
+            {% assign image = block.settings.image %}
+            {% if image %}
+              {% assign image_class = ' w-full h-full object-cover ' %}
+              {% if settings.corners == 'rounded' %}
+                {% assign image_class = image_class | append: ' rounded-md' %}
+              {% endif %}
+              {{ image | image_url: width: image.width | image_tag: class: image_class }}
+            {% else %}
+              {{ 'detailed-apparel-1' | placeholder_svg_tag: ' w-full h-full object-cover ' }}
+            {% endif %}
+          </div>
+        {% when 'heading' %}
+          <div class="flex flex-col {{ section.settings.content_position }} color-{{ section.settings.color_scheme }} w-full p-4">
+            <h2 class="{{ block.settings.heading_size }}">{{ block.settings.heading }}</h2>
+          {% when 'sub_heading' %}
+            <div class=" rte {{ block.settings.sub_heading_size }}">{{ block.settings.sub_heading }}</div>
+          {% when 'button' %}
+            <div>
+              <a href="{{ block.settings.button_url }}" class="button button-primary">
+                {{ block.settings.button }}
+              </a>
+            </div>
+          </div>
+
+      {% endcase %}
+    {% endfor %}
   </div>
 </div>
+
 
 {% schema %}
   {
     "name": "Image with text",
     "settings": [
-      {
-        "type": "image_picker",
-        "id": "image",
-        "label": "Image"
-      },
+
       {
         "type": "checkbox",
         "id": "page_width",
@@ -79,16 +76,6 @@
       },
 
       {
-        "type": "range",
-        "id": "image_width",
-        "label": "Image Width",
-        "min": 50,
-        "max": 120,
-        "default": 80,
-        "step": 5,
-        "unit": "px"
-
-      }, {
         "type": "select",
         "id": "content_position",
         "label": "Content position",
@@ -105,7 +92,8 @@
           }
         ],
         "default": "justify-center"
-      }, {
+      },
+      {
         "type": "select",
         "id": "vertical_alignment",
         "label": "Content alignment",
@@ -149,6 +137,28 @@
     ],
     "blocks": [
       {
+        "type": "image",
+        "name": "Image",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }, {
+            "type": "range",
+            "id": "image_width",
+            "label": "Image Width",
+            "min": 50,
+            "max": 150,
+            "default": 100,
+            "step": 5,
+            "unit": "%"
+
+          }
+
+        ]
+      }, {
         "type": "heading",
         "name": "Image with text",
         "limit": 1,
@@ -229,6 +239,8 @@
         "name": "Image with text",
         "blocks": [
           {
+            "type": "image"
+          }, {
             "type": "heading"
           }, {
             "type": "sub_heading"
